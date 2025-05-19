@@ -1,0 +1,8 @@
+# Test dependencies
+coverage>=7.0.0
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Note: This package requires Unreal Engine 5.5's Python environment
+# The 'unreal' module is provided by Unreal Engine and cannot be installed via pip
+# Make sure to run tests within Unreal Engine's Python environment 

@@ -1,0 +1,27 @@
+[run]
+source = src
+omit = 
+    tests/*
+    */__init__.py
+    */test_*.py
+    */run_tests.py
+    */test_helpers.py
+    */test_config.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    pass
+    raise ImportError
+    except ImportError:
+    def main\(\):
+
+[html]
+directory = coverage_html
+title = UnrealHelpers Test Coverage Report
+
+[xml]
+output = coverage.xml 

@@ -42,54 +42,99 @@ This repository contains a set of Python modules designed to work within Unreal 
 
 2. The scripts will be available in the Unreal Editor's Python console.
 
-## Usage
+## Development Setup
 
-Import the utilities in the Unreal Editor's Python console:
+### Prerequisites
 
-```python
-import asset_utils
-import level_utils
-import material_utils
-import blueprint_utils
+1. Unreal Engine 5.5 installed
+2. Python 3.x (included with Unreal Engine)
+3. Your Unreal Engine project set up
+
+### Installation Steps
+
+1. Install development dependencies:
+```bash
+pip install -r requirements-dev.txt
 ```
 
-### Example: Creating a Blueprint with Variables
-
-```python
-# Create a new Blueprint
-bp = blueprint_utils.create_blueprint(unreal.Actor, "MyGameActor", "/Game/Blueprints")
-
-# Add variables
-health_var = blueprint_utils.add_variable_to_blueprint(
-    bp, 
-    "Health", 
-    unreal.Float, 
-    default_value=100.0,
-    category="Gameplay"
-)
-
-# Add events
-begin_play = blueprint_utils.add_begin_play_event(bp)
+2. Install the package in development mode:
+```bash
+pip install -e .
 ```
 
-### Example: Managing Assets
+## Running Tests
 
+**Important Note**: The tests require the Unreal Engine Python environment because they use the `unreal` module, which is only available within Unreal Engine. You cannot run the tests directly from a regular Python environment.
+
+### Option 1: Run from Unreal Editor (Recommended)
+
+1. Open your Unreal Engine project
+2. Open the Python Console in the editor (Window > Developer Tools > Python Console)
+3. Run the following commands:
 ```python
-# Get selected assets
-selected = asset_utils.get_selected_assets()
+import sys
+import os
 
-# Duplicate an asset
-new_asset = asset_utils.duplicate_asset("/Game/MyAsset", "MyAsset_Copy")
+# Add the UnrealHelpers directory to the Python path
+unreal_helpers_path = r"C:\Users\matth\Documents\Projects\UnrealHelpers"  # Update this path
+sys.path.append(unreal_helpers_path)
+
+# Run the tests
+from tests.run_tests import run_all_tests
+run_all_tests()
 ```
 
-## Requirements
+### Option 2: Run from Unreal Engine's Python Environment
 
-- Unreal Engine 5.5
-- Python 3.x (included with Unreal Engine)
+1. Open a command prompt
+2. Navigate to your Unreal Engine's Python directory (typically something like):
+   ```
+   C:\Program Files\Epic Games\UE_5.5\Engine\Binaries\ThirdParty\Python3\Win64\python.exe
+   ```
+3. Run the tests:
+```bash
+python "C:\Users\matth\Documents\Projects\UnrealHelpers\tests\run_tests.py"
+```
 
-## Contributing
+### Troubleshooting
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+If you see the error `ModuleNotFoundError: No module named 'unreal'`, this means you're trying to run the tests outside of the Unreal Engine Python environment. Make sure to:
+
+1. Run the tests from within the Unreal Editor's Python Console, or
+2. Use the Python executable that comes with Unreal Engine
+
+## Project Structure
+
+```
+UnrealHelpers/
+├── src/                    # Source code
+│   ├── __init__.py
+│   ├── asset_utils.py
+│   ├── level_utils.py
+│   ├── material_utils.py
+│   ├── blueprint_utils.py
+│   ├── widget_utils.py
+│   ├── animation_utils.py
+│   └── sound_utils.py
+├── tests/                  # Test files
+│   ├── __init__.py
+│   ├── test_*.py
+│   ├── test_helpers.py
+│   ├── test_config.py
+│   └── run_tests.py
+├── setup.py               # Package setup
+├── requirements-dev.txt   # Development dependencies
+└── .coveragerc           # Coverage configuration
+```
+
+## Development
+
+When developing new features or fixing bugs:
+
+1. Make sure you're working within Unreal Engine's Python environment
+2. Write tests for new functionality
+3. Run the test suite to ensure everything works
+4. Update documentation as needed
 
 ## License
 
